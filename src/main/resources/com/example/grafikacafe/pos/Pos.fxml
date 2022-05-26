@@ -38,7 +38,7 @@
                               <Insets left="800.0" top="25.0" />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Sales">
+                        <Button mnemonicParsing="false" onAction="#sales" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Sales">
                            <font>
                               <Font size="18.0" />
                            </font>

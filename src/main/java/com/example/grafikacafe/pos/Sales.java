@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 
 import java.io.IOException;
 
-public class Pos {
+public class Sales {
 
     @FXML
     public void logout (ActionEvent event) throws IOException {
@@ -15,9 +15,9 @@ public class Pos {
     }
 
     @FXML
-    public void sales (ActionEvent event) throws IOException {
+    public void pos (ActionEvent event) throws IOException {
         Main change = new Main();
-        change.changeScene("pos/Sales.fxml");
+        change.changeScene("pos/Pos.fxml");
     }
 
 }
