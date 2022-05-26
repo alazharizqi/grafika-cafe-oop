@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.grafikacafe.menu.UpdateMenu">
+   <children>
+      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <AnchorPane layoutX="20.0" layoutY="20.0" prefHeight="720.0" prefWidth="1280.0">
+                     <children>
+                        <Pane layoutY="14.0" prefHeight="127.0" prefWidth="1240.0" style="-fx-background-color: white;">
+                           <children>
+                              <VBox prefHeight="134.0" prefWidth="1224.0">
+                                 <children>
+                                    <HBox prefHeight="84.0" prefWidth="1224.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MANAGER">
+                                             <font>
+                                                <Font size="36.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="15.0" top="15.0" />
+                                             </HBox.margin>
+                                          </Text>
+                                          <Button mnemonicParsing="false" onAction="#menu" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Menu">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="670.0" top="25.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="141.0" style="-fx-background-color: transparent;" text="Update Menu">
+                                             <font>
+                                                <Font name="System Bold" size="18.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="20.0" top="25.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                          <Button mnemonicParsing="false" onAction="#logout" prefHeight="39.0" prefWidth="91.0" style="-fx-background-color: transparent;" text="Log Out">
+                                             <HBox.margin>
+                                                <Insets left="20.0" top="25.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="50.0" prefWidth="1224.0" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </Pane>
+                        <Pane layoutY="171.0" prefHeight="489.0" prefWidth="1240.0" style="-fx-background-color: white;">
+                           <children>
+                              <VBox prefHeight="489.0" prefWidth="1224.0">
+                                 <children>
+                                    <TextField fx:id="menu" prefHeight="30.0" promptText="menu" style="-fx-background-color: transparent; -fx-border-color: gray; -fx-border-radius: 5;">
+                                       <VBox.margin>
+                                          <Insets left="100.0" right="100.0" top="20.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <ComboBox fx:id="kategori" prefHeight="30.0" prefWidth="1355.0" promptText="Category" style="-fx-background-color: transparent; -fx-border-color: gray; -fx-border-radius: 5;">
+                                       <VBox.margin>
+                                          <Insets left="100.0" right="100.0" top="20.0" />
+                                       </VBox.margin>
+                                    </ComboBox>
+                                    <TextField fx:id="harga" prefHeight="30.0" promptText="Price" style="-fx-background-color: transparent; -fx-border-color: gray; -fx-border-radius: 5;">
+                                       <VBox.margin>
+                                          <Insets left="100.0" right="100.0" top="20.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <ComboBox fx:id="status" prefHeight="30.0" prefWidth="1355.0" promptText="Status" style="-fx-background-color: transparent; -fx-border-color: gray; -fx-border-radius: 5;">
+                                       <VBox.margin>
+                                          <Insets left="100.0" right="100.0" top="20.0" />
+                                       </VBox.margin>
+                                    </ComboBox>
+                                    <TextArea fx:id="deskripsi" prefHeight="200.0" prefWidth="200.0" promptText="Description" style="-fx-background-color: transparent; -fx-border-color: gray; -fx-border-radius: 5;">
+                                       <VBox.margin>
+                                          <Insets left="100.0" right="100.0" top="20.0" />
+                                       </VBox.margin>
+                                    </TextArea>
+                                    <Button mnemonicParsing="false" onAction="#submitData" prefHeight="30.0" prefWidth="1385.0" style="-fx-background-color: blue;" text="Update" textFill="WHITE">
+                                       <VBox.margin>
+                                          <Insets left="100.0" right="100.0" top="20.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
