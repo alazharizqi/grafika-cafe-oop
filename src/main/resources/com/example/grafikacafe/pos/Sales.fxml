@@ -56,9 +56,14 @@
                   </HBox>
                   <HBox prefHeight="50.0" prefWidth="1224.0">
                      <children>
+                        <Button mnemonicParsing="false" onAction="#print" prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: blue;" text="Print Report" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </Button>
                         <TextField fx:id="search" prefHeight="30.0" prefWidth="250.0" promptText="Search" style="-fx-background-color: transparent; -fx-border-color: gray; -fx-border-radius: 5;">
                            <HBox.margin>
-                              <Insets left="950.0" />
+                              <Insets left="740.0" />
                            </HBox.margin>
                         </TextField>
                      </children>

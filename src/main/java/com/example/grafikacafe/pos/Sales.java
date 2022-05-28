@@ -15,12 +15,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class Sales implements Initializable {
@@ -183,6 +189,22 @@ public class Sales implements Initializable {
     public void pos (ActionEvent event) throws IOException {
         Main change = new Main();
         change.changeScene("pos/Pos.fxml");
+    }
+
+    @FXML
+    public void print (ActionEvent event) throws  IOException {
+        JasperPrint jasperPrint = null;
+        Map param = new HashMap();
+
+        try {
+            jasperPrint = JasperFillManager.fillReport("report/SalesReport.jasper", param, SqiliteConnection.Connector());
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.setTitle("Sales Report");
+            viewer.setVisible(true);
+        } catch (JRException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     @Override

@@ -4,6 +4,7 @@ module com.example.grafikacafe {
     requires java.sql;
     requires org.xerial.sqlitejdbc;
     requires java.prefs;
+    requires jasperreports;
 
 
     opens com.example.grafikacafe to javafx.fxml;
