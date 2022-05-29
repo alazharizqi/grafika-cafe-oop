@@ -247,7 +247,7 @@ public class Sales implements Initializable {
         Map param = new HashMap();
 
         try {
-            jasperPrint = JasperFillManager.fillReport("report/report.jasper", param, SqiliteConnection.Connector());
+            jasperPrint = JasperFillManager.fillReport("report/Report.jasper", param, SqiliteConnection.Connector());
             JasperViewer viewer = new JasperViewer(jasperPrint, false);
             viewer.setTitle("Sales Report");
             viewer.setVisible(true);
