@@ -2,6 +2,7 @@ package com.example.grafikacafe.pos;
 
 import com.example.grafikacafe.Main;
 import com.example.grafikacafe.connection.SqiliteConnection;
+import com.example.grafikacafe.session.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -22,12 +23,17 @@ import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 public class Sales implements Initializable {
 
@@ -40,9 +46,6 @@ public class Sales implements Initializable {
     private TableView<ModelPos> posTableView;
 
     @FXML
-    private TableColumn<ModelPos, String> id_pos;
-
-    @FXML
     private TableColumn<ModelPos, String> kode_pos;
 
     @FXML
@@ -52,10 +55,31 @@ public class Sales implements Initializable {
     private TableColumn<ModelPos, String> customer;
 
     @FXML
+    private TableColumn<ModelPos, String> menu;
+
+    @FXML
+    private TableColumn<ModelPos, String> qty;
+
+    @FXML
     private TableColumn<ModelPos, String> date;
 
     @FXML
     private TableColumn<ModelPos, String> total;
+
+    @FXML
+    private TableColumn<ModelPos, String> kategori;
+
+    @FXML
+    private TableColumn<ModelPos, String> harga;
+
+    @FXML
+    private TableColumn<ModelPos, String> deskripsi;
+
+    @FXML
+    private TableColumn<ModelPos, String> status;
+
+    @FXML
+    private TableColumn<ModelPos, String> id_pos;
 
     ObservableList<ModelPos> dataList = FXCollections.observableArrayList();
 
@@ -71,8 +95,14 @@ public class Sales implements Initializable {
         kode_pos.setCellValueFactory(new PropertyValueFactory<>("kode_pos"));
         no_meja.setCellValueFactory(new PropertyValueFactory<>("no_meja"));
         customer.setCellValueFactory(new PropertyValueFactory<>("customer"));
-        date.setCellValueFactory(new PropertyValueFactory<>("date"));
+        menu.setCellValueFactory(new PropertyValueFactory<>("menu"));
+        kategori.setCellValueFactory(new PropertyValueFactory<>("kategori"));
+        harga.setCellValueFactory(new PropertyValueFactory<>("harga"));
+        deskripsi.setCellValueFactory(new PropertyValueFactory<>("deskripsi"));
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        qty.setCellValueFactory(new PropertyValueFactory<>("qty"));
         total.setCellValueFactory(new PropertyValueFactory<>("total"));
+        date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         FilteredList<ModelPos> filteredList = new FilteredList<>(dataList, e -> true);
 
@@ -83,9 +113,7 @@ public class Sales implements Initializable {
                 }
                 String keyword = newValue.toLowerCase();
 
-                if (ProductPos.getId_pos().toLowerCase().indexOf(keyword) > -1) {
-                    return true;
-                } else if (ProductPos.getKode_pos().toLowerCase().indexOf(keyword) > -1) {
+                if (ProductPos.getKode_pos().toLowerCase().indexOf(keyword) > -1) {
                     return true;
                 } else if (ProductPos.getNo_meja().toLowerCase().indexOf(keyword) > -1) {
                     return true;
@@ -115,32 +143,32 @@ public class Sales implements Initializable {
                         setGraphic(null);
                         setText(null);
                     } else {
-                        HBox deleteIcon = new HBox(new Label("Delete"));
+//                        HBox deleteIcon = new HBox(new Label("Delete"));
 
-                        deleteIcon.setStyle(
-                                "-fx-cursor: hand;"
+//                        deleteIcon.setStyle(
+//                                "-fx-cursor: hand;"
+//
+//                        );
+//                        deleteIcon.setOnMouseClicked((MouseEvent event) -> {
+//                            try {
+//                                modelPos = posTableView.getSelectionModel().getSelectedItem();
+//                                var query = "delete from tb_pos where id_pos = ?";
+//                                var connection = SqiliteConnection.Connector();
+//                                preparedStatement = connection.prepareStatement(query);
+//                                preparedStatement.setString(1, modelPos.getId_pos());
+//                                preparedStatement.execute();
+//                                preparedStatement.close();
+//                                resultSet.close();
+//                                refreshTable();
+//                            } catch (SQLException ex) {
+//                                System.out.println(ex.getMessage());
+//                            }
+//                        });
 
-                        );
-                        deleteIcon.setOnMouseClicked((MouseEvent event) -> {
-                            try {
-                                modelPos = posTableView.getSelectionModel().getSelectedItem();
-                                var query = "delete from tb_pos where id_pos = ?";
-                                var connection = SqiliteConnection.Connector();
-                                preparedStatement = connection.prepareStatement(query);
-                                preparedStatement.setString(1, modelPos.getId_pos());
-                                preparedStatement.execute();
-                                preparedStatement.close();
-                                resultSet.close();
-                                refreshTable();
-                            } catch (SQLException ex) {
-                                System.out.println(ex.getMessage());
-                            }
-                        });
-
-                        HBox hbox = new HBox(deleteIcon);
-                        hbox.setStyle("-fx-alignment: center");
-                        HBox.setMargin(deleteIcon,new Insets(2, 3, 0, 5));
-                        setGraphic(hbox);
+//                        HBox hbox = new HBox(deleteIcon);
+//                        hbox.setStyle("-fx-alignment: center");
+//                        HBox.setMargin(deleteIcon,new Insets(2, 3, 0, 5));
+//                        setGraphic(hbox);
                         setText(null);
                     }
                 }
@@ -165,8 +193,14 @@ public class Sales implements Initializable {
                         resultSet.getString("kode_pos"),
                         resultSet.getString("no_meja"),
                         resultSet.getString("customer"),
-                        resultSet.getString("date"),
-                        resultSet.getString("total")
+                        resultSet.getString("menu"),
+                        resultSet.getString("kategori"),
+                        resultSet.getString("harga"),
+                        resultSet.getString("deskripsi"),
+                        resultSet.getString("status"),
+                        resultSet.getString("qty"),
+                        resultSet.getString("total"),
+                        resultSet.getString("date")
                 ));
                 posTableView.setItems(dataList);
             }
@@ -179,10 +213,26 @@ public class Sales implements Initializable {
 
 
 
-    @FXML
-    public void logout (ActionEvent event) throws IOException {
-        Main change = new Main();
-        change.changeScene("login/Login.fxml");
+    public void logout() throws BackingStoreException {
+        Connection connection = SqiliteConnection.Connector();
+        var session = Session.getSession();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String format = localDateTime.format(dateTimeFormatter);
+        String query = "insert into tb_log (employee, activity, date) VALUES (?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, session.name);
+            preparedStatement.setString(2, "Logout");
+            preparedStatement.setString(3, format);
+            preparedStatement.execute();
+            Main main = new Main();
+            main.changeScene("login/Login.fxml");
+            Preferences preferences = Preferences.userRoot();
+            preferences.clear();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @FXML
@@ -197,7 +247,7 @@ public class Sales implements Initializable {
         Map param = new HashMap();
 
         try {
-            jasperPrint = JasperFillManager.fillReport("report/SalesReport.jasper", param, SqiliteConnection.Connector());
+            jasperPrint = JasperFillManager.fillReport("report/report.jasper", param, SqiliteConnection.Connector());
             JasperViewer viewer = new JasperViewer(jasperPrint, false);
             viewer.setTitle("Sales Report");
             viewer.setVisible(true);

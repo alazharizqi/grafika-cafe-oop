@@ -3,6 +3,7 @@ package com.example.grafikacafe.menu;
 import com.example.grafikacafe.Main;
 import com.example.grafikacafe.admin.HandleUser;
 import com.example.grafikacafe.connection.SqiliteConnection;
+import com.example.grafikacafe.session.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,7 +19,11 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 public class UpdateMenu implements Initializable {
 
@@ -46,6 +51,25 @@ public class UpdateMenu implements Initializable {
     public void addItems() {
         kategori.setItems(kategoriList);
         status.setItems(statusList);
+    }
+
+    public void setLog() {
+        Connection connection = SqiliteConnection.Connector();
+        var session = Session.getSession();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String format = localDateTime.format(dateTimeFormatter);
+        String query = "insert into tb_log (employee, activity, date) VALUES (?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, session.name);
+            preparedStatement.setString(2, "Update menu");
+            preparedStatement.setString(3, format);
+            preparedStatement.execute();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void updateQuery() {
@@ -81,6 +105,7 @@ public class UpdateMenu implements Initializable {
             } else {
                 if (validation.checkValidation(menu.getText(), id_menu.id_menu)) {
                     updateQuery();
+                    setLog();
                     main.changeScene("menu/Menu.fxml");
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -94,16 +119,38 @@ public class UpdateMenu implements Initializable {
         }
     }
 
-    @FXML
-    public void logout (ActionEvent event) throws IOException {
-        Main change = new Main();
-        change.changeScene("login/Login.fxml");
+    public void logout() throws BackingStoreException {
+        Connection connection = SqiliteConnection.Connector();
+        var session = Session.getSession();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String format = localDateTime.format(dateTimeFormatter);
+        String query = "insert into tb_log (employee, activity, date) VALUES (?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, session.name);
+            preparedStatement.setString(2, "Logout");
+            preparedStatement.setString(3, format);
+            preparedStatement.execute();
+            Main main = new Main();
+            main.changeScene("login/Login.fxml");
+            Preferences preferences = Preferences.userRoot();
+            preferences.clear();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @FXML
     public void menu (ActionEvent event) throws IOException {
         Main change = new Main();
         change.changeScene("menu/Menu.fxml");
+    }
+
+    @FXML
+    public void activity (ActionEvent event) throws IOException {
+        Main change = new Main();
+        change.changeScene("menu/Activity.fxml");
     }
 
     @FXML

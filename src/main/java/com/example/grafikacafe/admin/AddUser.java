@@ -2,6 +2,7 @@ package com.example.grafikacafe.admin;
 
 import com.example.grafikacafe.Main;
 import com.example.grafikacafe.connection.SqiliteConnection;
+import com.example.grafikacafe.session.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +15,11 @@ import javafx.scene.control.TextField;
 import java.sql.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 public class AddUser {
 
@@ -36,6 +41,25 @@ public class AddUser {
 
     public void addItems() {
         role.setItems(roleList);
+    }
+
+    public void setLog() {
+        Connection connection = SqiliteConnection.Connector();
+        var session = Session.getSession();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String format = localDateTime.format(dateTimeFormatter);
+        String query = "insert into tb_log (employee, activity, date) VALUES (?,?,?)";
+        try {
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, session.name);
+                preparedStatement.setString(2, "Add user");
+                preparedStatement.setString(3, format);
+                preparedStatement.execute();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void submitData(ActionEvent event) throws IOException {
@@ -67,6 +91,7 @@ public class AddUser {
                     preparedStatement.execute();
                     preparedStatement.close();
                     connection.close();
+                    setLog();
                     main.changeScene("admin/AdminUser.fxml");
                 }
                 resultSet.close();
@@ -87,10 +112,31 @@ public class AddUser {
         Main change = new Main();
         change.changeScene("admin/AdminUser.fxml");
     }
-
     @FXML
-    public void logout (ActionEvent event) throws IOException {
-        Main change = new Main();
-        change.changeScene("login/login.fxml");
+    public void activity (ActionEvent event) throws IOException {
+        Main main = new Main();
+        main.changeScene("admin/Activity.fxml");
+    }
+
+    public void logout() throws BackingStoreException {
+        Connection connection = SqiliteConnection.Connector();
+        var session = Session.getSession();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String format = localDateTime.format(dateTimeFormatter);
+        String query = "insert into tb_log (employee, activity, date) VALUES (?,?,?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, session.name);
+            preparedStatement.setString(2, "Logout");
+            preparedStatement.setString(3, format);
+            preparedStatement.execute();
+            Main main = new Main();
+            main.changeScene("login/Login.fxml");
+            Preferences preferences = Preferences.userRoot();
+            preferences.clear();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

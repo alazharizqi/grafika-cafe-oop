@@ -28,7 +28,7 @@
                               <Insets left="15.0" top="15.0" />
                            </HBox.margin>
                         </Text>
-                        <Button mnemonicParsing="false" onAction="#pos" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="POS">
+                        <Button mnemonicParsing="false" onAction="#pos" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: transparent;" text="Sales">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -74,12 +74,18 @@
       </Pane>
       <TableView fx:id="posTableView" layoutX="32.0" layoutY="191.0" prefHeight="497.0" prefWidth="1219.0">
          <columns>
-            <TableColumn fx:id="id_pos" prefWidth="75.0" text="Id" />
+            <TableColumn fx:id="id_pos" prefWidth="75.0" text="id" visible="false" />
             <TableColumn fx:id="kode_pos" prefWidth="75.0" text="Sales Code" />
             <TableColumn fx:id="no_meja" prefWidth="75.0" text="Table Number" />
             <TableColumn fx:id="customer" prefWidth="75.0" text="Customer" />
-            <TableColumn fx:id="date" prefWidth="75.0" text="Date" />
+            <TableColumn fx:id="menu" prefWidth="75.0" text="Menu" />
+            <TableColumn fx:id="kategori" prefWidth="75.0" text="Kategori" visible="false" />
+            <TableColumn fx:id="harga" prefWidth="75.0" text="Harga" visible="false" />
+            <TableColumn fx:id="deskripsi" prefWidth="75.0" text="Deskripsi" visible="false" />
+            <TableColumn fx:id="status" prefWidth="75.0" text="Status" visible="false" />
+            <TableColumn fx:id="qty" prefWidth="75.0" text="Qty" />
             <TableColumn fx:id="total" prefWidth="75.0" text="Total" />
+            <TableColumn fx:id="date" prefWidth="75.0" text="Date" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

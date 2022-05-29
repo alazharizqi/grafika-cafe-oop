@@ -24,4 +24,7 @@ module com.example.grafikacafe {
 
     opens com.example.grafikacafe.login to javafx.fxml;
     exports com.example.grafikacafe.login;
+
+    opens com.example.grafikacafe.session to javafx.fxml;
+    exports com.example.grafikacafe.session;
 }

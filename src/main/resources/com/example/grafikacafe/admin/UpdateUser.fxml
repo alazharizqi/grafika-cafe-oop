@@ -35,12 +35,20 @@
                                     <Font size="18.0" />
                                  </font>
                                  <HBox.margin>
-                                    <Insets left="550.0" top="25.0" />
+                                    <Insets left="450.0" top="25.0" />
                                  </HBox.margin>
                               </Button>
                               <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="129.0" style="-fx-background-color: transparent;" text="Update User">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="20.0" top="25.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#activity" prefHeight="39.0" prefWidth="87.0" style="-fx-background-color: transparent;" text="Activity">
+                                 <font>
+                                    <Font size="18.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets left="20.0" top="25.0" />
